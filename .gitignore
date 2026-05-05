@@ -1,0 +1,20 @@
+# Build output
+target/
+
+# IntelliJ files
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Tomcat runtime folders
+logs/
+temp/
+work/
+webapps/
+conf/
+.smarttomcat/
+
+# OS files
+.DS_Store
+Thumbs.db
