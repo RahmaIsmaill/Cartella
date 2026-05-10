@@ -7,7 +7,7 @@
     <session-factory>
         <!-- Database connection settings -->
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://127.0.0.1:3307/AmazonEl8alabah?useSSL=false&amp;serverTimezone=UTC</property>
+        <property name="hibernate.connection.url">jdbc:mysql://127.0.0.1:3307/Cartella?useSSL=false&amp;serverTimezone=UTC</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">root</property>
 
@@ -19,7 +19,7 @@
         <property name="current_session_context_class">thread</property>
 
         <!-- Mapping classes -->
-        <mapping class="com.adminPanel.app.model.Product"/>
-        <mapping class="com.adminPanel.app.model.ProductDetails"/>
+        <mapping class="com.adminPanel.app.model.product.Product"/>
+        <mapping class="com.adminPanel.app.model.product.ProductDetails"/>
     </session-factory>
 </hibernate-configuration>
