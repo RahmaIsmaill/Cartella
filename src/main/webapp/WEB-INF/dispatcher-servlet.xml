@@ -13,13 +13,11 @@
            http://www.springframework.org/schema/tx
            https://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <!-- To detect @Transactional, @Autowired, @Service, etc -->
-    <context:annotation-config />
+    <context:annotation-config/>
 
-    <!-- Scan components -->
     <context:component-scan base-package="com.adminPanel.app"/>
 
-    <mvc:annotation-driven />
+    <mvc:annotation-driven/>
 
     <!-- View Resolver -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -28,30 +26,68 @@
     </bean>
 
     <!-- DataSource -->
-    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+    <bean id="dataSource"
+          class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          destroy-method="close">
+
         <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
-        <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3307/AmazonEl8alabah?useSSL=false&amp;serverTimezone=UTC"/>
+
+        <property name="jdbcUrl"
+                  value="jdbc:mysql://127.0.0.1:3307/Cartella?useSSL=false&amp;serverTimezone=UTC"/>
+
         <property name="user" value="root"/>
         <property name="password" value="root"/>
+
+        <!-- Pool Settings -->
+        <property name="minPoolSize" value="3"/>
+        <property name="maxPoolSize" value="10"/>
+        <property name="maxIdleTime" value="300"/>
+        <property name="acquireIncrement" value="2"/>
+
     </bean>
 
     <!-- Hibernate SessionFactory -->
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+
         <property name="dataSource" ref="dataSource"/>
-        <property name="packagesToScan" value="com.adminPanel.app.model"/>
+
+        <property name="packagesToScan"
+                  value="com.adminPanel.app.model"/>
+
         <property name="hibernateProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</prop>
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
-                <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.format_sql">true</prop>
+
+                <prop key="hibernate.dialect">
+                    org.hibernate.dialect.MySQL8Dialect
+                </prop>
+
+                <prop key="hibernate.hbm2ddl.auto">
+                    update
+                </prop>
+
+                <prop key="hibernate.show_sql">
+                    true
+                </prop>
+
+                <prop key="hibernate.format_sql">
+                    true
+                </prop>
+
+                <prop key="hibernate.current_session_context_class">
+                    org.springframework.orm.hibernate5.SpringSessionContext
+                </prop>
+
             </props>
         </property>
     </bean>
 
     <!-- Transaction Manager -->
-    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+
         <property name="sessionFactory" ref="sessionFactory"/>
+
     </bean>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>

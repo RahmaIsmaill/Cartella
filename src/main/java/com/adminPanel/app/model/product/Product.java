@@ -1,7 +1,8 @@
-package com.adminPanel.app.model;
+package com.adminPanel.app.model.product;
 
 import lombok.*;
 import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "product")
@@ -19,5 +20,6 @@ public class Product {
     private String name;
 
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
     private ProductDetails productDetails;
 }

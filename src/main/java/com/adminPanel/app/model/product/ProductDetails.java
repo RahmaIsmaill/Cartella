@@ -1,9 +1,9 @@
-package com.adminPanel.app.model;
+package com.adminPanel.app.model.product;
 
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 
 @Entity
@@ -24,13 +24,12 @@ public class ProductDetails {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date expiration_date;
 
-    private String manufacturer;
-
     private double price;
 
-    private int available;
+    private boolean available;
 
     @OneToOne
     @JoinColumn(name = "product_id")
+    @JsonIgnore
     private Product product;
 }
