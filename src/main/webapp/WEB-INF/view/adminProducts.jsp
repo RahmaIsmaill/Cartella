@@ -362,7 +362,8 @@
                             <a href="${pageContext.request.contextPath}/products/view/${product.id}" class="btn btn-secondary btn-sm">
                                 👁️ View
                             </a>
-                            <form action="${pageContext.request.contextPath}/products/delete/${product.id}" method="post" style="display: inline;">
+                            <form action="${pageContext.request.contextPath}/admin/products/delete" method="post" style="display: inline;">
+                                <input type="hidden" name="id" value="${product.id}">
                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this product?')">
                                     🗑️ Delete
                                 </button>

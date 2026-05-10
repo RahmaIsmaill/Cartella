@@ -243,16 +243,16 @@
             <div class="nav-links">
                 <a href="${pageContext.request.contextPath}/">Home</a>
                 <a href="${pageContext.request.contextPath}/products">Products</a>
-                <c:if test="${loggedUser != null}">
+                <c:if test="${not empty requestScope.loggedUser}">
                     <div class="user-info">
-                        <span>👤 ${loggedUser.username}</span>
-                        <c:if test="${loggedUser.role == 'ADMIN'}">
+                        <span>👤 ${requestScope.loggedUser.username}</span>
+                        <c:if test="${requestScope.loggedUser.role == 'ADMIN'}">
                             <a href="${pageContext.request.contextPath}/admin/products" class="btn btn-primary btn-sm">Admin Panel</a>
                         </c:if>
                         <a href="${pageContext.request.contextPath}/signout" class="btn btn-secondary btn-sm">Logout</a>
                     </div>
                 </c:if>
-                <c:if test="${loggedUser == null}">
+                <c:if test="${empty requestScope.loggedUser}">
                     <a href="${pageContext.request.contextPath}/signin" class="btn btn-primary">Login</a>
                     <a href="${pageContext.request.contextPath}/signup" class="btn btn-secondary">Register</a>
                 </c:if>
@@ -282,7 +282,7 @@
                                 </span>
                                 <div class="product-actions">
                                     <a href="${pageContext.request.contextPath}/products/view/${product.id}" class="btn btn-primary btn-sm">View Details</a>
-                                    <c:if test="${loggedUser != null and loggedUser.role == 'ADMIN'}">
+                                    <c:if test="${not empty requestScope.loggedUser and requestScope.loggedUser.role == 'ADMIN'}">
                                         <a href="${pageContext.request.contextPath}/admin/products/update/${product.id}" class="btn btn-secondary btn-sm">Edit</a>
                                     </c:if>
                                 </div>
@@ -296,7 +296,7 @@
                     <div class="empty-state-icon">📦</div>
                     <h2 class="empty-state-title">No Products Found</h2>
                     <p class="empty-state-message">We couldn't find any products in our inventory.</p>
-                    <c:if test="${loggedUser != null and loggedUser.role == 'ADMIN'}">
+                    <c:if test="${not empty requestScope.loggedUser and requestScope.loggedUser.role == 'ADMIN'}">
                         <a href="${pageContext.request.contextPath}/admin/products/add" class="btn btn-primary">Add First Product</a>
                     </c:if>
                 </div>

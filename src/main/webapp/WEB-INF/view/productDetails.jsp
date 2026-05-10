@@ -347,7 +347,8 @@
             <div class="actions">
                 <a href="${pageContext.request.contextPath}/" class="btn btn-primary">← Back to Products</a>
                 <c:if test="${not empty sessionScope.loggedUser and sessionScope.loggedUser.role == 'ADMIN'}">
-                    <form action="${pageContext.request.contextPath}/products/delete/${product.id}" method="post" style="display: inline;">
+                    <form action="${pageContext.request.contextPath}/admin/products/delete" method="post" style="display: inline;">
+                        <input type="hidden" name="id" value="${product.id}">
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">
                             🗑️ Delete Product
                         </button>
@@ -385,7 +386,7 @@
                     
                     <div class="form-group">
                         <label for="comment">Your Review</label>
-                        <textarea id="comment" name="rating" placeholder="Share your experience with this product..." required></textarea>
+                        <textarea id="comment" name="comment" placeholder="Share your experience with this product..." required></textarea>
                     </div>
                     
                     <button type="submit" class="btn btn-primary">Submit Review</button>
