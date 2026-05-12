@@ -1,6 +1,6 @@
 package com.ecommerce.filter;
 
-import com.ecommerce.dao.UserDao;
+import com.ecommerce.dao.user.UserDao;
 import com.ecommerce.model.User;
 import com.ecommerce.util.JwtUtil;
 import io.jsonwebtoken.Claims;

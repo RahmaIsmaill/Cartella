@@ -1,6 +1,6 @@
 package com.ecommerce.service;
 
-import com.ecommerce.dao.ReviewDao;
+import com.ecommerce.dao.review.ReviewDao;
 import com.ecommerce.model.Review;
 import com.ecommerce.util.CacheConstants;
 import org.slf4j.Logger;

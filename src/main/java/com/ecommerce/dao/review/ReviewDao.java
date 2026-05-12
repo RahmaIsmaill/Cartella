@@ -1,4 +1,4 @@
-package com.ecommerce.dao;
+package com.ecommerce.dao.review;
 
 import com.ecommerce.config.DatabaseConnection;
 import com.ecommerce.model.Review;

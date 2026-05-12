@@ -1,6 +1,6 @@
 package com.ecommerce.controller.auth;
 
-import com.ecommerce.dao.UserDao;
+import com.ecommerce.dao.user.UserDao;
 import com.ecommerce.model.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

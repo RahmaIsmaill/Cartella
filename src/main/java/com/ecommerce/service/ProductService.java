@@ -1,6 +1,6 @@
 package com.ecommerce.service;
 
-import com.ecommerce.dao.ProductDao;
+import com.ecommerce.dao.product.ProductDao;
 import com.ecommerce.model.Product;
 import com.ecommerce.util.CacheConstants;
 import org.slf4j.Logger;

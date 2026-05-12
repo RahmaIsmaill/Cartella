@@ -1,6 +1,6 @@
 package com.ecommerce.service;
 
-import com.ecommerce.dao.UserDao;
+import com.ecommerce.dao.user.UserDao;
 import com.ecommerce.model.User;
 import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
