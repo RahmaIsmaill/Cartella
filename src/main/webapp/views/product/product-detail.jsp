@@ -1,138 +1,642 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.model.Product" %>
-<%@ page import="com.model.Review" %>
-<%@ page import="com.model.User" %>
+<%@ page import="com.ecommerce.model.Product" %>
+<%@ page import="com.ecommerce.model.Review" %>
+<%@ page import="com.ecommerce.model.User" %>
 <%@ page import="java.util.List" %>
-<html>
-<head>
-  <title>Product Details</title>
-  <style>
-    body { font-family: Arial, sans-serif; background: #f5f5f5; margin: 0; }
-    .navbar { background: #2c3e50; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
-    .navbar a { color: white; text-decoration: none; margin-left: 15px; }
-    .navbar a:hover { color: #3498db; }
-    .container { max-width: 900px; margin: 20px auto; padding: 0 20px; }
-    .product-detail { background: white; border-radius: 8px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); display: flex; gap: 30px; }
-    .product-detail img { width: 400px; height: 300px; object-fit: cover; border-radius: 8px; }
-    .product-detail .info { flex: 1; }
-    .product-detail h1 { margin: 0 0 10px; color: #2c3e50; }
-    .product-detail .price { color: #27ae60; font-size: 28px; font-weight: bold; }
-    .product-detail .desc { color: #666; margin: 15px 0; line-height: 1.6; }
-    .back-link { display: inline-block; margin-bottom: 20px; color: #3498db; text-decoration: none; }
-    .back-link:hover { text-decoration: underline; }
-    .reviews-section { margin-top: 30px; }
-    .review-card { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); margin-bottom: 15px; }
-    .review-card .header { display: flex; justify-content: space-between; align-items: center; }
-    .review-card .username { font-weight: bold; color: #2c3e50; }
-    .review-card .date { color: #999; font-size: 12px; }
-    .review-card .stars { color: #f39c12; }
-    .review-card .comment { color: #555; margin-top: 8px; }
-    .add-review { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-top: 20px; }
-    .add-review h3 { margin-top: 0; }
-    .add-review textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; min-height: 80px; font-family: Arial; }
-    .add-review select, .add-review input { padding: 10px; border: 1px solid #ddd; border-radius: 4px; margin: 5px 0; }
-    .add-review button { padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer; }
-    .add-review button:hover { background: #2980b9; }
-    .error { color: #e74c3c; }
-    .no-reviews { color: #999; font-style: italic; }
-    .review-actions { margin-top: 10px; }
-    .review-actions a { display: inline-block; padding: 5px 10px; background: #3498db; color: white; text-decoration: none; border-radius: 4px; font-size: 12px; margin-right: 5px; }
-    .review-actions a:hover { background: #2980b9; }
-    .review-actions form { display: inline; }
-    .review-actions button { padding: 5px 10px; background: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; }
-    .review-actions button:hover { background: #c0392b; }
-  </style>
-</head>
-<body>
-<%
-  Product product = (Product) request.getAttribute("product");
-  List<Review> reviews = (List<Review>) request.getAttribute("reviews");
-  User loggedInUser = (User) session.getAttribute("loggedInUser");
-%>
 
-<div class="navbar">
-  <div><strong>E-Commerce</strong></div>
-  <div>
-    <a href="${pageContext.request.contextPath}/home">Home</a>
-    <a href="${pageContext.request.contextPath}/logout">Logout</a>
-  </div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <%
+        Product product       = (Product) request.getAttribute("product");
+        List<Review> reviews  = (List<Review>) request.getAttribute("reviews");
+        User loggedInUser     = (User) session.getAttribute("loggedInUser");
+    %>
+
+    <title><%= product.getName() %> — Cartella</title>
+
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap');
+
+        *,
+        *::before,
+        *::after{
+            box-sizing:border-box;
+            margin:0;
+            padding:0;
+        }
+
+        body{
+            font-family:'Poppins',sans-serif;
+            background:#0f1110;
+            color:#f5f5f5;
+        }
+
+        /* NAVBAR */
+
+        .navbar{
+            height:75px;
+            padding:0 45px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+
+            background:rgba(13,23,18,.92);
+            backdrop-filter:blur(10px);
+
+            border-bottom:1px solid rgba(255,255,255,.06);
+            position:sticky;
+            top:0;
+            z-index:100;
+        }
+
+        .navbar-brand{
+            text-decoration:none;
+            color:#fff;
+            font-family:'Cormorant Garamond',serif;
+            font-size:40px;
+            letter-spacing:1px;
+        }
+
+        .navbar-brand span{
+            color:#d0b178;
+        }
+
+        .nav-link{
+            color:#d4d4d4;
+            text-decoration:none;
+            margin-left:28px;
+            font-size:15px;
+            transition:.3s;
+        }
+
+        .nav-link:hover{
+            color:#d0b178;
+        }
+
+        /* CONTAINER */
+
+        .container{
+            max-width:1200px;
+            margin:auto;
+            padding:40px 25px 60px;
+        }
+
+        /* BREADCRUMB */
+
+        .breadcrumb{
+            margin-bottom:30px;
+            color:#9ca3af;
+            font-size:14px;
+        }
+
+        .breadcrumb a{
+            color:#d0b178;
+            text-decoration:none;
+        }
+
+        /* PRODUCT CARD */
+
+        .product-card{
+            background:#161a18;
+            border:1px solid rgba(255,255,255,.05);
+
+            border-radius:28px;
+            overflow:hidden;
+
+            display:flex;
+            gap:0;
+
+            margin-bottom:50px;
+
+            box-shadow:0 10px 35px rgba(0,0,0,.35);
+        }
+
+        .product-img,
+        .product-img-placeholder{
+            width:450px;
+            height:520px;
+            object-fit:cover;
+            flex-shrink:0;
+        }
+
+        .product-img-placeholder{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            background:linear-gradient(135deg,#15251d,#20362b);
+            color:#d0b178;
+            font-size:50px;
+        }
+
+        .product-info{
+            flex:1;
+            padding:45px;
+        }
+
+        .product-name{
+            font-family:'Cormorant Garamond',serif;
+            font-size:52px;
+            margin-bottom:15px;
+            color:white;
+        }
+
+        .product-price{
+            font-size:38px;
+            font-weight:600;
+            color:#d0b178;
+            margin-bottom:25px;
+        }
+
+        .product-desc{
+            font-size:16px;
+            line-height:1.9;
+            color:#cfcfcf;
+            margin-bottom:30px;
+        }
+
+        .product-meta{
+            color:#8d9490;
+            font-size:14px;
+        }
+
+        /* BUTTONS */
+
+        .admin-actions{
+            display:flex;
+            gap:14px;
+            margin-top:35px;
+        }
+
+        .btn{
+            padding:13px 24px;
+            border:none;
+            border-radius:10px;
+
+            font-size:14px;
+            font-weight:500;
+            text-decoration:none;
+            cursor:pointer;
+
+            transition:.3s;
+        }
+
+        .btn:hover{
+            transform:translateY(-2px);
+        }
+
+        .btn-edit{
+            background:#d0b178;
+            color:#111;
+        }
+
+        .btn-delete-admin{
+            background:#2b1a1a;
+            color:#ffb4b4;
+            border:1px solid rgba(255,120,120,.2);
+        }
+
+        /* SECTION TITLE */
+
+        .section-title{
+            display:flex;
+            align-items:center;
+            gap:12px;
+
+            margin-bottom:25px;
+
+            font-size:28px;
+            font-family:'Cormorant Garamond',serif;
+        }
+
+        .count-badge{
+            background:#d0b178;
+            color:#111;
+
+            padding:4px 12px;
+            border-radius:50px;
+
+            font-size:13px;
+            font-weight:600;
+        }
+
+        /* REVIEWS */
+
+        .review-card{
+            background:#171b19;
+            border:1px solid rgba(255,255,255,.05);
+
+            border-radius:18px;
+            padding:24px;
+            margin-bottom:18px;
+        }
+
+        .review-header{
+            display:flex;
+            justify-content:space-between;
+            margin-bottom:10px;
+        }
+
+        .reviewer-name{
+            font-weight:600;
+            color:#fff;
+            font-size:15px;
+        }
+
+        .review-date{
+            color:#8b8b8b;
+            font-size:13px;
+        }
+
+        .stars{
+            color:#d0b178;
+            font-size:18px;
+            letter-spacing:3px;
+            margin-bottom:12px;
+        }
+
+        .review-comment{
+            color:#d5d5d5;
+            line-height:1.8;
+            font-size:15px;
+        }
+
+        .review-actions{
+            display:flex;
+            gap:10px;
+            margin-top:18px;
+        }
+
+        .btn-sm{
+            padding:8px 16px;
+            border-radius:8px;
+            border:none;
+            font-size:13px;
+            cursor:pointer;
+            text-decoration:none;
+        }
+
+        .btn-sm-edit{
+            background:#d0b178;
+            color:#111;
+        }
+
+        .btn-sm-delete{
+            background:#2b1a1a;
+            color:#ffb4b4;
+        }
+
+        /* NO REVIEWS */
+
+        .no-reviews{
+            text-align:center;
+            padding:40px;
+            background:#171b19;
+            border-radius:18px;
+            color:#9ca3af;
+        }
+
+        /* WRITE REVIEW */
+
+        .write-review{
+            margin-top:35px;
+
+            background:#171b19;
+            border:1px solid rgba(255,255,255,.05);
+
+            border-radius:24px;
+            padding:35px;
+        }
+
+        .write-review h3{
+            font-family:'Cormorant Garamond',serif;
+            font-size:34px;
+            margin-bottom:25px;
+            color:white;
+        }
+
+        .form-group{
+            margin-bottom:22px;
+        }
+
+        label{
+            display:block;
+            margin-bottom:10px;
+            color:#d9d9d9;
+            font-size:14px;
+        }
+
+        select,
+        textarea{
+            width:100%;
+            background:#0f1110;
+            border:1px solid rgba(255,255,255,.08);
+
+            border-radius:10px;
+            padding:14px 16px;
+
+            color:white;
+            font-size:15px;
+            font-family:'Poppins',sans-serif;
+
+            outline:none;
+        }
+
+        select:focus,
+        textarea:focus{
+            border-color:#d0b178;
+        }
+
+        textarea{
+            min-height:130px;
+            resize:vertical;
+        }
+
+        .btn-submit{
+            background:linear-gradient(90deg,#0d3f2b,#1a5a3e,#0d3f2b);
+            color:white;
+
+            border:none;
+            border-radius:10px;
+
+            padding:14px 28px;
+
+            font-size:15px;
+            cursor:pointer;
+            transition:.3s;
+        }
+
+        .btn-submit:hover{
+            opacity:.9;
+        }
+
+        /* MOBILE */
+
+        @media(max-width:900px){
+
+            .product-card{
+                flex-direction:column;
+            }
+
+            .product-img,
+            .product-img-placeholder{
+                width:100%;
+                height:350px;
+            }
+
+            .product-info{
+                padding:30px;
+            }
+
+            .product-name{
+                font-size:42px;
+            }
+
+            .navbar{
+                padding:0 20px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <a class="navbar-brand" href="${pageContext.request.contextPath}/home">
+        Cartella<span>.</span>
+    </a>
+
+    <div>
+        <a class="nav-link" href="${pageContext.request.contextPath}/home">Home</a>
+        <a class="nav-link" href="${pageContext.request.contextPath}/logout">Sign out</a>
+    </div>
+
+</nav>
 
 <div class="container">
-  <a class="back-link" href="${pageContext.request.contextPath}/home">&larr; Back to Products</a>
 
-  <div class="product-detail">
-    <% if (product.getImageUrl() != null && !product.getImageUrl().isEmpty()) { %>
-      <img src="<%= product.getImageUrl() %>" alt="<%= product.getName() %>">
-    <% } else { %>
-      <img src="https://via.placeholder.com/400x300?text=No+Image" alt="No image">
-    <% } %>
-    <div class="info">
-      <h1><%= product.getName() %></h1>
-      <p class="price">$<%= product.getPrice() %></p>
-      <p class="desc"><%= product.getDescription() != null ? product.getDescription() : "No description available." %></p>
+    <div class="breadcrumb">
+        <a href="${pageContext.request.contextPath}/home">Home</a>
+        &rsaquo;
+        <%= product.getName() %>
     </div>
-  </div>
 
-  <div class="reviews-section">
-    <h2>Reviews</h2>
+    <div class="product-card">
+
+        <% if (product.getImageUrl() != null && !product.getImageUrl().isEmpty()) { %>
+
+        <img class="product-img"
+             src="<%= product.getImageUrl() %>"
+             alt="<%= product.getName() %>"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+
+        <div class="product-img-placeholder" style="display:none;">
+            Product
+        </div>
+
+        <% } else { %>
+
+        <div class="product-img-placeholder">
+            Product
+        </div>
+
+        <% } %>
+
+        <div class="product-info">
+
+            <h1 class="product-name"><%= product.getName() %></h1>
+
+            <div class="product-price">
+                $<%= product.getPrice() %>
+            </div>
+
+            <p class="product-desc">
+                <%= product.getDescription() != null && !product.getDescription().isEmpty()
+                        ? product.getDescription()
+                        : "No description provided." %>
+            </p>
+
+            <div class="product-meta">
+                Added:
+                <%= product.getCreatedAt() != null
+                        ? product.getCreatedAt().toString().substring(0,10)
+                        : "N/A" %>
+            </div>
+
+            <% if (loggedInUser.isAdmin()) { %>
+
+            <div class="admin-actions">
+
+                <a class="btn btn-edit"
+                   href="${pageContext.request.contextPath}/update-product?id=<%= product.getId() %>">
+                    Edit Product
+                </a>
+
+                <form action="${pageContext.request.contextPath}/delete-product"
+                      method="post"
+                      style="display:inline"
+                      onsubmit="return confirm('Delete this product?')">
+
+                    <input type="hidden"
+                           name="id"
+                           value="<%= product.getId() %>">
+
+                    <button type="submit" class="btn btn-delete-admin">
+                        Delete
+                    </button>
+
+                </form>
+
+            </div>
+
+            <% } %>
+
+        </div>
+
+    </div>
+
+    <div class="section-title">
+
+        Reviews
+
+        <span class="count-badge">
+            <%= reviews != null ? reviews.size() : 0 %>
+        </span>
+
+    </div>
 
     <% if (reviews == null || reviews.isEmpty()) { %>
-      <p class="no-reviews">No reviews yet. Be the first to review!</p>
-    <% } else { %>
-      <% for (Review r : reviews) { %>
-        <div class="review-card">
-          <div class="header">
-            <span class="username"><%= r.getUsername() %></span>
-            <span class="date"><%= r.getCreatedAt() != null ? r.getCreatedAt().toString() : "" %></span>
-          </div>
-          <div class="stars">
-            <% for (int i = 1; i <= 5; i++) { %>
-              <%= i <= r.getRating() ? "&#9733;" : "&#9734;" %>
-            <% } %>
-          </div>
-          <p class="comment"><%= r.getComment() != null ? r.getComment() : "" %></p>
 
-          <%-- Show edit/delete buttons only for the user's own reviews or admin --%>
-          <% if (loggedInUser != null && (r.getUserId().equals(loggedInUser.getId()) || "ADMIN".equals(loggedInUser.getRole()))) { %>
-            <div class="review-actions">
-              <a href="${pageContext.request.contextPath}/update-review?id=<%= r.getId() %>&productId=<%= product.getId() %>">Edit</a>
-              <form action="${pageContext.request.contextPath}/delete-review" method="post" onsubmit="return confirm('Are you sure you want to delete this review?');">
-                <input type="hidden" name="id" value="<%= r.getId() %>">
-                <button type="submit">Delete</button>
-              </form>
-            </div>
-          <% } %>
+    <div class="no-reviews">
+        No reviews yet. Be the first to share your thoughts!
+    </div>
+
+    <% } else { %>
+
+    <% for (Review r : reviews) { %>
+
+    <div class="review-card">
+
+        <div class="review-header">
+
+                    <span class="reviewer-name">
+                        <%= r.getUsername() %>
+                    </span>
+
+            <span class="review-date">
+                        <%= r.getCreatedAt() != null
+                                ? r.getCreatedAt().toString().substring(0,10)
+                                : "" %>
+                    </span>
+
         </div>
-      <% } %>
+
+        <div class="stars">
+
+            <% for (int i = 1; i <= 5; i++) { %>
+
+            <%= i <= r.getRating() ? "★" : "☆" %>
+
+            <% } %>
+
+        </div>
+
+        <div class="review-comment">
+            <%= r.getComment() != null ? r.getComment() : "" %>
+        </div>
+
+        <% if (loggedInUser != null &&
+                (r.getUserId().equals(loggedInUser.getId())
+                        || loggedInUser.isAdmin())) { %>
+
+        <div class="review-actions">
+
+            <% if (r.getUserId().equals(loggedInUser.getId())) { %>
+
+            <a class="btn-sm btn-sm-edit"
+               href="${pageContext.request.contextPath}/update-review?id=<%= r.getId() %>">
+                Edit
+            </a>
+
+            <% } %>
+
+            <form action="${pageContext.request.contextPath}/delete-review"
+                  method="post"
+                  style="display:inline"
+                  onsubmit="return confirm('Delete this review?')">
+
+                <input type="hidden"
+                       name="id"
+                       value="<%= r.getId() %>">
+
+                <button type="submit" class="btn-sm btn-sm-delete">
+                    Delete
+                </button>
+
+            </form>
+
+        </div>
+
+        <% } %>
+
+    </div>
+
     <% } %>
 
-    <div class="add-review">
-      <h3>Write a Review</h3>
-      <p class="error">${requestScope.error}</p>
+    <% } %>
 
-      <form action="${pageContext.request.contextPath}/add-review" method="post">
-        <input type="hidden" name="productId" value="<%= product.getId() %>">
+    <div class="write-review">
 
-        <label>Rating:</label>
-        <select name="rating" required>
-          <option value="5">5 - Excellent</option>
-          <option value="4">4 - Good</option>
-          <option value="3">3 - Average</option>
-          <option value="2">2 - Poor</option>
-          <option value="1">1 - Terrible</option>
-        </select>
+        <h3>Write a Review</h3>
 
-        <br><br>
+        <form action="${pageContext.request.contextPath}/add-review" method="post">
 
-        <textarea name="comment" placeholder="Write your review here..."></textarea>
+            <input type="hidden"
+                   name="productId"
+                   value="<%= product.getId() %>">
 
-        <br><br>
+            <div class="form-group">
 
-        <button type="submit">Submit Review</button>
-      </form>
+                <label for="rating">Your Rating</label>
+
+                <select name="rating" id="rating" required>
+
+                    <option value="5">★★★★★ — Excellent</option>
+                    <option value="4">★★★★☆ — Good</option>
+                    <option value="3">★★★☆☆ — Average</option>
+                    <option value="2">★★☆☆☆ — Poor</option>
+                    <option value="1">★☆☆☆☆ — Terrible</option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="comment">Your Review</label>
+
+                <textarea name="comment"
+                          id="comment"
+                          placeholder="Share your experience with this product..."></textarea>
+
+            </div>
+
+            <button type="submit" class="btn-submit">
+                Submit Review
+            </button>
+
+        </form>
+
     </div>
-  </div>
+
 </div>
+
 </body>
 </html>
