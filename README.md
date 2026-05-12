@@ -1,4 +1,4 @@
-# 🛍️ Cartella (E-Commerce Web Application)
+# Cartella (E-Commerce Web Application)
 
 [![Java](https://img.shields.io/badge/Java-8-007396?style=flat-square&logo=openjdk&logoColor=white)](https://www.oracle.com/java/)
 [![Servlet](https://img.shields.io/badge/Servlet-6.1.0-007396?style=flat-square&logo=java&logoColor=white)](https://jakarta.ee/specifications/servlet/)
@@ -242,7 +242,7 @@ Cache is automatically invalidated on any create / update / delete operation.
 
 ---
 
-## 🛡 Filters
+## Filters
 
 | Filter | URL Pattern | Purpose |
 |--------|-------------|---------|
