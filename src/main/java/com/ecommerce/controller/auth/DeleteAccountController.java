@@ -1,6 +1,6 @@
 package com.ecommerce.controller.auth;
 
-import com.ecommerce.dao.UserDAO;
+import com.ecommerce.dao.UserDao;
 import com.ecommerce.model.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,10 +15,10 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 @WebServlet("/delete-account")
-public class DeleteAccountServlet extends HttpServlet {
+public class DeleteAccountController extends HttpServlet {
 
-    private static final Logger logger  = LoggerFactory.getLogger(DeleteAccountServlet.class);
-    private final UserDAO       userDAO = new UserDAO();
+    private static final Logger logger  = LoggerFactory.getLogger(DeleteAccountController.class);
+    private final UserDao userDAO = new UserDao();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

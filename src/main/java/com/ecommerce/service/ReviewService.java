@@ -1,6 +1,6 @@
 package com.ecommerce.service;
 
-import com.ecommerce.dao.ReviewDAO;
+import com.ecommerce.dao.ReviewDao;
 import com.ecommerce.model.Review;
 import com.ecommerce.util.CacheConstants;
 import org.slf4j.Logger;
@@ -11,7 +11,7 @@ import java.util.List;
 public class ReviewService {
 
     private static final Logger logger       = LoggerFactory.getLogger(ReviewService.class);
-    private final ReviewDAO     reviewDAO    = new ReviewDAO();
+    private final ReviewDao reviewDAO    = new ReviewDao();
     private final CacheService  cacheService = new CacheService();
 
     public List<Review> getReviewsByProduct(Long productId) {

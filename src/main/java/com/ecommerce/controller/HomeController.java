@@ -18,7 +18,7 @@ import java.util.List;
  * HomeServlet — loads all products and the latest reviews for the home page.
  */
 @WebServlet("/home")
-public class HomeServlet extends HttpServlet {
+public class HomeController extends HttpServlet {
 
     private final ProductService productService = new ProductService();
     private final ReviewService  reviewService  = new ReviewService();

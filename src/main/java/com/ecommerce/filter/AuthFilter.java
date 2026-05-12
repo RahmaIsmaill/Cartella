@@ -1,6 +1,6 @@
 package com.ecommerce.filter;
 
-import com.ecommerce.dao.UserDAO;
+import com.ecommerce.dao.UserDao;
 import com.ecommerce.model.User;
 import com.ecommerce.util.JwtUtil;
 import io.jsonwebtoken.Claims;
@@ -23,7 +23,7 @@ import java.io.IOException;
 public class AuthFilter extends HttpFilter {
 
     private static final Logger  logger  = LoggerFactory.getLogger(AuthFilter.class);
-    private final        UserDAO userDAO = new UserDAO();
+    private final UserDao userDAO = new UserDao();
 
     @Override
     protected void doFilter(HttpServletRequest request, HttpServletResponse response,

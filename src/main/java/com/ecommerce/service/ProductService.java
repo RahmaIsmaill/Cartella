@@ -1,6 +1,6 @@
 package com.ecommerce.service;
 
-import com.ecommerce.dao.ProductDAO;
+import com.ecommerce.dao.ProductDao;
 import com.ecommerce.model.Product;
 import com.ecommerce.util.CacheConstants;
 import org.slf4j.Logger;
@@ -11,7 +11,7 @@ import java.util.List;
 public class ProductService {
 
     private static final Logger logger       = LoggerFactory.getLogger(ProductService.class);
-    private final ProductDAO    productDAO   = new ProductDAO();
+    private final ProductDao productDAO   = new ProductDao();
     private final CacheService  cacheService = new CacheService();
 
     public List<Product> getAllProducts() {

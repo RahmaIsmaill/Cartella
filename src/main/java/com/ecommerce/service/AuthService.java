@@ -1,6 +1,6 @@
 package com.ecommerce.service;
 
-import com.ecommerce.dao.UserDAO;
+import com.ecommerce.dao.UserDao;
 import com.ecommerce.model.User;
 import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 public class AuthService {
 
     private static final Logger logger  = LoggerFactory.getLogger(AuthService.class);
-    private final UserDAO       userDAO = new UserDAO();
+    private final UserDao userDAO = new UserDao();
 
     public boolean register(User user) {
         if (userDAO.existsByEmailOrUsername(user.getEmail(), user.getUsername())) {

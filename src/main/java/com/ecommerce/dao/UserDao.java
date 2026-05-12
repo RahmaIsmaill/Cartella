@@ -10,9 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDAO {
+public class UserDao {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserDAO.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserDao.class);
 
     public void save(User user) {
         String sql = "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)";

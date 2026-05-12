@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/register")
-public class RegisterServlet extends HttpServlet {
+public class RegisterController extends HttpServlet {
 
     private final AuthService authService = new AuthService();
 

@@ -15,9 +15,9 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 @WebServlet("/delete-review")
-public class DeleteReviewServlet extends HttpServlet {
+public class DeleteReviewController extends HttpServlet {
 
-    private static final Logger logger        = LoggerFactory.getLogger(DeleteReviewServlet.class);
+    private static final Logger logger        = LoggerFactory.getLogger(DeleteReviewController.class);
     private final ReviewService reviewService = new ReviewService();
 
     @Override

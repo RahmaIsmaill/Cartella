@@ -12,9 +12,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDAO {
+public class ProductDao {
 
-    private static final Logger logger = LoggerFactory.getLogger(ProductDAO.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProductDao.class);
 
     public List<Product> findAll() {
         String sql = "SELECT * FROM products ORDER BY created_at DESC";

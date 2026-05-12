@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/login")
-public class LoginServlet extends HttpServlet {
+public class LoginController extends HttpServlet {
 
     private final AuthService authService = new AuthService();
 

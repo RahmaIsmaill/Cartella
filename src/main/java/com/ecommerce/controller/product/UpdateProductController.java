@@ -16,10 +16,10 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
-@WebServlet("/add-product")
-public class AddProductServlet extends HttpServlet {
+@WebServlet("/update-product")
+public class UpdateProductController extends HttpServlet {
 
-    private static final Logger logger         = LoggerFactory.getLogger(AddProductServlet.class);
+    private static final Logger logger         = LoggerFactory.getLogger(UpdateProductController.class);
     private final ProductService productService = new ProductService();
 
     @Override
@@ -30,7 +30,21 @@ public class AddProductServlet extends HttpServlet {
             response.sendError(403, "Access denied");
             return;
         }
-        request.getRequestDispatcher("/views/product/add-product.jsp").forward(request, response);
+
+        String idParam = request.getParameter("id");
+        if (!ValidationUtil.isValidLong(idParam)) {
+            response.sendError(400, "Invalid product ID");
+            return;
+        }
+
+        Product product = productService.getProductById(Long.parseLong(idParam));
+        if (product == null) {
+            response.sendError(404, "Product not found");
+            return;
+        }
+
+        request.setAttribute("product", product);
+        request.getRequestDispatcher("/views/product/update-product.jsp").forward(request, response);
     }
 
     @Override
@@ -42,26 +56,41 @@ public class AddProductServlet extends HttpServlet {
             return;
         }
 
+        String idParam     = request.getParameter("id");
         String name        = request.getParameter("name");
         String description = request.getParameter("description");
         String priceStr    = request.getParameter("price");
         String imageUrl    = request.getParameter("imageUrl");
 
+        if (!ValidationUtil.isValidLong(idParam)) {
+            response.sendError(400, "Invalid product ID");
+            return;
+        }
+
+        Long productId = Long.parseLong(idParam);
+        Product existing = productService.getProductById(productId);
+        if (existing == null) {
+            response.sendError(404, "Product not found");
+            return;
+        }
+
         List<String> errors = ValidationUtil.validateProduct(name, priceStr);
         if (!errors.isEmpty()) {
             request.setAttribute("error", errors.get(0));
-            request.getRequestDispatcher("/views/product/add-product.jsp").forward(request, response);
+            request.setAttribute("product", existing);
+            request.getRequestDispatcher("/views/product/update-product.jsp").forward(request, response);
             return;
         }
 
         Product product = new Product();
+        product.setId(productId);
         product.setName(name.trim());
         product.setDescription(description != null ? description.trim() : "");
         product.setPrice(new BigDecimal(priceStr));
         product.setImageUrl(imageUrl != null ? imageUrl.trim() : "");
 
-        productService.addProduct(product);
-        logger.info("Product '{}' added by admin: {}", name, user.getEmail());
+        productService.updateProduct(product);
+        logger.info("Product {} updated by admin: {}", productId, user.getEmail());
         response.sendRedirect(request.getContextPath() + "/home");
     }
 }

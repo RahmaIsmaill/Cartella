@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/product")
-public class ProductDetailServlet extends HttpServlet {
+public class ProductDetailController extends HttpServlet {
 
     private final ProductService productService = new ProductService();
     private final ReviewService  reviewService  = new ReviewService();

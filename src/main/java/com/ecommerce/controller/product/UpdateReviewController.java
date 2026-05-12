@@ -16,9 +16,9 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/update-review")
-public class UpdateReviewServlet extends HttpServlet {
+public class UpdateReviewController extends HttpServlet {
 
-    private static final Logger logger        = LoggerFactory.getLogger(UpdateReviewServlet.class);
+    private static final Logger logger        = LoggerFactory.getLogger(UpdateReviewController.class);
     private final ReviewService reviewService = new ReviewService();
 
     @Override

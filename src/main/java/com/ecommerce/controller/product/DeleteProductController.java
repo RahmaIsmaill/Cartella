@@ -14,9 +14,9 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 @WebServlet("/delete-product")
-public class DeleteProductServlet extends HttpServlet {
+public class DeleteProductController extends HttpServlet {
 
-    private static final Logger  logger         = LoggerFactory.getLogger(DeleteProductServlet.class);
+    private static final Logger  logger         = LoggerFactory.getLogger(DeleteProductController.class);
     private final ProductService productService = new ProductService();
 
     @Override
