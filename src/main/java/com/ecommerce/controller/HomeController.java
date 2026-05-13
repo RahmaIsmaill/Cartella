@@ -14,9 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * HomeServlet — loads all products and the latest reviews for the home page.
- */
+
 @WebServlet("/home")
 public class HomeController extends HttpServlet {
 
