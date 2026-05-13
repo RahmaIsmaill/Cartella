@@ -17,19 +17,17 @@ A robust e-commerce web application built with Java Servlets and MVC architectur
 ###  User Features
 - Register and login with email & password
 - Session-based authentication (stateful)
-- JWT token-based authentication (stateless) via REST API
+- JWT token-based authentication (stateless)
 - Sign out and delete account
 - Role-based access control (USER / ADMIN)
 
 ###  Product Features
 - View all products on the home page
-- Browse full product catalog
 - View detailed product information
-- Search products by keyword
 - Redis caching for fast product retrieval
 
 ###  Review Features
-- Logged-in users can submit reviews with ratings (1–5)
+- Logged-in users can submit reviews with ratings 
 - View all reviews on the home page
 - View product-specific reviews on the product details page
 
@@ -37,13 +35,11 @@ A robust e-commerce web application built with Java Servlets and MVC architectur
 - Add new products with details and pricing
 - Update existing product information
 - Delete products
-- Admin-only dashboard with product statistics
+
 
 ###  Security & Performance
 - AuthFilter protects secured endpoints
-- AdminFilter restricts admin routes
-- JWT filter for REST API endpoints
-- Rate limiting using Redis (100 requests/minute per IP)
+- Rate limiting using Redis (60 requests/minute per IP)
 - BCrypt password hashing
 
 ---
@@ -177,18 +173,6 @@ erDiagram
     USER ||--o{ REVIEW : "writes"
     PRODUCT ||--o{ REVIEW : "receives"
 ```
-
----
-
-##  Setup & Configuration
-
-### Prerequisites
-- Java 8+
-- MySQL 9.2+
-- Redis (local or cloud)
-- Apache Tomcat
-- Maven 3.6+
-
 ---
 
 ##  Authentication Flow
@@ -235,7 +219,7 @@ Cache is automatically invalidated on any create / update / delete operation.
 
 ##  Rate Limiting
 
-- **Limit:** 100 requests per minute per IP address
+- **Limit:** 60 requests per minute per IP address
 - **Scope:** All endpoints (`/*`)
 - **Storage:** Redis counter with 1-minute TTL
 - **Response on exceed:** HTTP 429 — `Rate limit exceeded. Try again later.`
@@ -248,7 +232,7 @@ Cache is automatically invalidated on any create / update / delete operation.
 |--------|-------------|---------|
 | `AuthFilter` | `/products/*`, `/admin/*` | Checks session login, blocks unauthenticated users |
 | `AdminFilter` | `/admin/*` | Checks ADMIN role |
-| `JWTAuthFilter` | `/api/*` | Validates JWT token for REST endpoints |
+| `JWTAuthFilter` | `/api/*` | Validates JWT token  |
 | `RateLimitFilter` | `/*` | Redis-based rate limiting |
 
 ---
@@ -297,32 +281,5 @@ Cache is automatically invalidated on any create / update / delete operation.
 
 ---
 
-##  Security Features
 
-- **Dual Authentication**: Session-based for web UI, JWT for REST API
-- **Password Security**: BCrypt hashing for secure password storage
-- **Role-based Access**: USER and ADMIN roles with appropriate permissions
-- **Rate Limiting**: Redis-based rate limiting (100 requests/minute per IP)
-- **Input Validation**: Server-side validation for all user inputs
-- **SQL Injection Protection**: Prepared statements used throughout
 
----
-
-##  Performance Features
-
-- **Redis Caching**: Frequently accessed data cached for faster response
-- **Connection Pooling**: Efficient database connection management
-- **Optimized Queries**: Well-structured SQL queries for better performance
-- **Lazy Loading**: Resources loaded only when needed
-
----
-
-##  Development Features
-
-- **Clean Architecture**: MVC pattern with clear separation of concerns
-- **Dependency Injection**: Manual DI implementation for loose coupling
-- **Exception Handling**: Centralized exception handling mechanism
-- **Logging**: SLF4J for comprehensive logging
-- **Build Automation**: Maven for dependency management and building
-
----
